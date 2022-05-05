@@ -1,0 +1,71 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Doman", "01 - Doman", "{B74602E6-7275-46E5-98E1-1BF8132AC6AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Application", "02 - Application", "{BC117675-D3A4-467D-9FF3-B2305314F50C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Infrastructure", "03 - Infrastructure", "{204B8F2C-74F6-457C-BD9F-A508E30A5E34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Presentation", "04 - Presentation", "{C86CD0E2-5504-4F7B-BEA8-F548BBD2F4B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FvProject.EverquestGame.Patcher.Domain.Contracts", "FvProject.EverquestGame.Patcher.Domain.Contracts\FvProject.EverquestGame.Patcher.Domain.Contracts.csproj", "{1E4F51D2-52A9-454B-A04A-C2EF106AA2B7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FvProject.EverquestGame.Patcher.Domain", "FvProject.EverquestGame.Patcher.Domain\FvProject.EverquestGame.Patcher.Domain.csproj", "{D1DB7A40-7520-42BB-B308-C2C362C1F48F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FvProject.EverquestGame.Patcher.Application.Contracts", "FvProject.EverquestGame.Patcher.Application.Contracts\FvProject.EverquestGame.Patcher.Application.Contracts.csproj", "{2B45D500-913A-4C75-9652-B3BA5D10A171}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FvProject.EverquestGame.Patcher.Application", "FvProject.EverquestGame.Patcher.Application\FvProject.EverquestGame.Patcher.Application.csproj", "{8AABB869-AF07-4285-AA05-CD6647788550}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FvProject.EverquestGame.Patcher.Presentation.Client", "FvProject.EverquestGame.Patcher.Presentation.Client\FvProject.EverquestGame.Patcher.Presentation.Client.csproj", "{2988EB98-D6E1-4F50-A822-F9E05B89C3BB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FvProject.EverquestGame.Patcher.Infrastructure", "FvProject.EverquestGame.Patcher.Infrastructure\FvProject.EverquestGame.Patcher.Infrastructure.csproj", "{E7D3BAF0-4F65-4005-8C03-FA07C9EED238}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E4F51D2-52A9-454B-A04A-C2EF106AA2B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E4F51D2-52A9-454B-A04A-C2EF106AA2B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E4F51D2-52A9-454B-A04A-C2EF106AA2B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E4F51D2-52A9-454B-A04A-C2EF106AA2B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1DB7A40-7520-42BB-B308-C2C362C1F48F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1DB7A40-7520-42BB-B308-C2C362C1F48F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1DB7A40-7520-42BB-B308-C2C362C1F48F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1DB7A40-7520-42BB-B308-C2C362C1F48F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B45D500-913A-4C75-9652-B3BA5D10A171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B45D500-913A-4C75-9652-B3BA5D10A171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B45D500-913A-4C75-9652-B3BA5D10A171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B45D500-913A-4C75-9652-B3BA5D10A171}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AABB869-AF07-4285-AA05-CD6647788550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AABB869-AF07-4285-AA05-CD6647788550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AABB869-AF07-4285-AA05-CD6647788550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AABB869-AF07-4285-AA05-CD6647788550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2988EB98-D6E1-4F50-A822-F9E05B89C3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2988EB98-D6E1-4F50-A822-F9E05B89C3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2988EB98-D6E1-4F50-A822-F9E05B89C3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2988EB98-D6E1-4F50-A822-F9E05B89C3BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7D3BAF0-4F65-4005-8C03-FA07C9EED238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7D3BAF0-4F65-4005-8C03-FA07C9EED238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7D3BAF0-4F65-4005-8C03-FA07C9EED238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7D3BAF0-4F65-4005-8C03-FA07C9EED238}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1E4F51D2-52A9-454B-A04A-C2EF106AA2B7} = {B74602E6-7275-46E5-98E1-1BF8132AC6AF}
+		{D1DB7A40-7520-42BB-B308-C2C362C1F48F} = {B74602E6-7275-46E5-98E1-1BF8132AC6AF}
+		{2B45D500-913A-4C75-9652-B3BA5D10A171} = {BC117675-D3A4-467D-9FF3-B2305314F50C}
+		{8AABB869-AF07-4285-AA05-CD6647788550} = {BC117675-D3A4-467D-9FF3-B2305314F50C}
+		{2988EB98-D6E1-4F50-A822-F9E05B89C3BB} = {C86CD0E2-5504-4F7B-BEA8-F548BBD2F4B5}
+		{E7D3BAF0-4F65-4005-8C03-FA07C9EED238} = {204B8F2C-74F6-457C-BD9F-A508E30A5E34}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9372E788-B465-483F-B3C3-A7BCD479CCF9}
+	EndGlobalSection
+EndGlobal

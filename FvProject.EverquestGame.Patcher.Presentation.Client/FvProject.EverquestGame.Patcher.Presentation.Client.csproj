@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+	<UseWindowsForms>True</UseWindowsForms>
+
+	<RootNamespace>FvProject.EverquestGame.Patcher.Presentation.Client</RootNamespace>
+
+	<ApplicationIcon>fv.ico</ApplicationIcon>
+
+	<AssemblyName>FvProject.Patcher</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="images\everquest-classic.jpg" />
+    <None Remove="images\everquest-kunark.jpg" />
+    <None Remove="images\everquest-luclin.jpg" />
+    <None Remove="images\everquest-power.jpg" />
+    <None Remove="images\everquest-velius.jpg" />
+    <None Remove="images\firionavie.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="fv.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Stylet" Version="1.3.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FvProject.EverquestGame.Patcher.Application\FvProject.EverquestGame.Patcher.Application.csproj" />
+    <ProjectReference Include="..\FvProject.EverquestGame.Patcher.Infrastructure\FvProject.EverquestGame.Patcher.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\everquest-classic.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\everquest-kunark.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\everquest-luclin.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\everquest-power.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\everquest-velius.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\firionavie.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.*.json" CopyToPublishDirectory="Never" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://docs.gradle.com/enterprise/admin/schema/gradle-enterprise-config-schema-4.json" /></VisualStudio></ProjectExtensions>
+</Project>

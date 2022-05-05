@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="YamlDotNet" Version="11.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FvProject.EverquestGame.Patcher.Application.Contracts\FvProject.EverquestGame.Patcher.Application.Contracts.csproj" />
+    <ProjectReference Include="..\FvProject.EverquestGame.Patcher.Application\FvProject.EverquestGame.Patcher.Application.csproj" />
+    <ProjectReference Include="..\FvProject.EverquestGame.Patcher.Domain.Contracts\FvProject.EverquestGame.Patcher.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\FvProject.EverquestGame.Patcher.Domain\FvProject.EverquestGame.Patcher.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

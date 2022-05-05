@@ -1,0 +1,16 @@
+﻿<Application x:Class="FvProject.EverquestGame.Patcher.Presentation.Client.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:local="clr-namespace:FvProject.EverquestGame.Patcher.Presentation.Client">
+    <Application.Resources>
+        <s:ApplicationLoader>
+            <s:ApplicationLoader.Bootstrapper>
+                <local:Bootstrapper/>
+            </s:ApplicationLoader.Bootstrapper>
+            <s:ApplicationLoader.MergedDictionaries>
+                <ResourceDictionary Source="ResourceDictionary.xaml"/>
+            </s:ApplicationLoader.MergedDictionaries>
+        </s:ApplicationLoader>
+    </Application.Resources>
+</Application>

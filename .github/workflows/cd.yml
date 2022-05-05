@@ -1,0 +1,55 @@
+name: Continuous Delivery - FVProject Pathcer
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        arch: [x86, x64]
+
+    env:
+      RuntimeIdentifier: win-${{ matrix.arch }}
+      PublishDir: ./publish/win-${{ matrix.arch }}/
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build    
+      shell: bash
+      run: dotnet publish FvProject.EverquestGame.Patcher.Presentation.Client -c Release -r $RuntimeIdentifier -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false --self-contained false -o $PublishDir
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+  
+    - name: Pre-Publish  
+      shell: bash
+      run: |
+        # Pack files
+        7z a -tzip $ReleaseName-$RuntimeIdentifier.zip $PublishDir/*
+        
+        # Delete output directory
+        rm -r $PublishDir
+      env:
+        ReleaseName: Patcher-${{ github.ref_name }}
+    
+
+    - name: Publish
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "Patcher*"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
