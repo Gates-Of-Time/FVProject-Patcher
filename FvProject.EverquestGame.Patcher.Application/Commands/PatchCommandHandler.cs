@@ -5,13 +5,13 @@ using FvProject.EverquestGame.Patcher.Domain.Contracts.Repositories;
 
 namespace FvProject.EverquestGame.Patcher.Application.Commands {
     public class PatchCommandHandler : ICommandHandler<PatchCommand> {
-        public PatchCommandHandler(IDeleteRepository<PatchFileInfo> deleteRepository, IGetRepository<string, Result<Stream>> getServerFileRepository, IUpsertRepository<PatchFile, Result> upsertRepository) {
+        public PatchCommandHandler(IDeleteRepository<PatchFileInfo, Result> deleteRepository, IGetRepository<string, Result<Stream>> getServerFileRepository, IUpsertRepository<PatchFile, Result> upsertRepository) {
             ClientFilesDeleter = deleteRepository;
             FileServer = getServerFileRepository;
             UpsertRepository = upsertRepository;
         }
 
-        private IDeleteRepository<PatchFileInfo> ClientFilesDeleter { get; }
+        private IDeleteRepository<PatchFileInfo, Result> ClientFilesDeleter { get; }
         private IGetRepository<string, Result<Stream>> FileServer { get; }
         private IUpsertRepository<PatchFile, Result> UpsertRepository { get; }
 
@@ -25,7 +25,10 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
                 }
 
                 progressReporter.Report($"Deleting {deleteFile.name}...");
-                await ClientFilesDeleter.Delete(deleteFile);
+                var deleteResult = await ClientFilesDeleter.Delete(deleteFile);
+                if (deleteResult.IsFailure) {
+                    progressReporter.Report(deleteResult.Error);
+                }
             }
 
             var totalDownloadSize = command.PatchList.Downloads.Sum(x => x.size < 1 ? 1 : x.size);

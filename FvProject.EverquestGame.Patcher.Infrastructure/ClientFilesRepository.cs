@@ -5,20 +5,27 @@ using FvProject.EverquestGame.Patcher.Domain;
 using FvProject.EverquestGame.Patcher.Domain.Contracts.Repositories;
 
 namespace FvProject.EverquestGame.Patcher.Infrastructure {
-    public class ClientFilesRepository : IGetAllRepository<IEnumerable<ClientFileInfo>>, IDeleteRepository<PatchFileInfo>, IUpsertRepository<PatchFile, Result>, IGetRepositorySync<ClientFileInfo, Stream> {
+    public class ClientFilesRepository : IGetAllRepository<IEnumerable<ClientFileInfo>>, IDeleteRepository<PatchFileInfo, Result>, IUpsertRepository<PatchFile, Result>, IGetRepositorySync<ClientFileInfo, Stream> {
         public ClientFilesRepository(IApplicationConfig applicationConfig) {
             ApplicationConfig = applicationConfig;
         }
 
         private IApplicationConfig ApplicationConfig { get; }
 
-        public async Task Delete(PatchFileInfo fileEntry) {
+        public async Task<Result> Delete(PatchFileInfo fileEntry) {
             var filePath = fileEntry.name.Replace("/", @"\");
             filePath = $@"{ApplicationConfig.GameDirectory}\{filePath}";
-            await Task.Run(() => {
+            return await Task.Run(() => {
                 if (File.Exists(fileEntry.name)) {
-                    File.Delete(fileEntry.name);
+                    try {
+                        File.Delete(fileEntry.name);
+                    }
+                    catch {
+                        return Result.Failure($"Unable to delete file: {fileEntry.name}");
+                    }
                 }
+
+                return Result.Success();
             });
         }
 
