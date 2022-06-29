@@ -16,9 +16,9 @@ namespace FvProject.EverquestGame.Patcher.Infrastructure {
             var filePath = fileEntry.name.Replace("/", @"\");
             filePath = $@"{ApplicationConfig.GameDirectory}\{filePath}";
             return await Task.Run(() => {
-                if (File.Exists(fileEntry.name)) {
+                if (File.Exists(filePath)) {
                     try {
-                        File.Delete(fileEntry.name);
+                        File.Delete(filePath);
                     }
                     catch {
                         return Result.Failure($"Unable to delete file: {fileEntry.name}");
