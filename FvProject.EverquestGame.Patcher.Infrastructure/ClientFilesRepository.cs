@@ -21,7 +21,21 @@ namespace FvProject.EverquestGame.Patcher.Infrastructure {
                         File.Delete(filePath);
                     }
                     catch {
-                        return Result.Failure($"Unable to delete file: {fileEntry.name}");
+                        var failureMessage = $"Unable to delete file: {fileEntry.name}";
+                        // https://blog.elmah.io/debugging-system-unauthorizedaccessexception/
+                        var attributes = File.GetAttributes(filePath);
+                        if ((attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly) {
+                            //attributes &= ~FileAttributes.ReadOnly;
+                            //File.SetAttributes(filePath, attributes);
+                            //File.Delete(filePath);
+                            failureMessage += " - file is marked as 'Read Only'";
+                        }
+                        else {
+                            failureMessage += " - file might be in use.";
+                        }
+
+
+                        return Result.Failure(failureMessage);
                     }
                 }
 
