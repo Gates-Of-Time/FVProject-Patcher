@@ -45,7 +45,7 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
                     curBytes += downloadFile.size < 1 ? 1 : downloadFile.size;
                     progressReporter.Report($"Failed to download <{downloadFile.name}> due to {downloadResult.Error}");
                 }
-                else if (downloadFile.md5 != MD5Hasher.CreateHash(downloadResult.Value)) {
+                else if (command.EnforceMD5Checksum && downloadFile.md5 != MD5Hasher.CreateHash(downloadResult.Value)) {
                     curBytes += downloadFile.size < 1 ? 1 : downloadFile.size;
                     progressReporter.Report($"Incorrect MD5 checksum on downloaded file... {downloadFile.name}");
                 }
@@ -53,7 +53,7 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
                     downloadResult.Value.Position = 0;
                     var fileBytes = 0L;
                     var relativeProgress = new Progress<long>(totalBytes => {
-                        if ((totalBytes - fileBytes) * 100 / totalDownloadSize < 1) {
+                        if ((totalBytes - fileBytes) * 100 / totalDownloadSize < 0.0001) {
                             return;
                         }
 

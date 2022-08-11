@@ -56,7 +56,7 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
             ProgressValue = 0;
             _stringBuilder.Clear();
 
-            var command = new PatchCommand(clientPatchFileList, this);
+            var command = new PatchCommand(clientPatchFileList, this, _applicationConfig.EnforceMD5Checksum);
             var commandHandler = new PatchCommandHandler(_clientFileRepository, _patchServerRepository, _clientFileRepository);
             await commandHandler.Execute(command, cancellationToken);
         }
