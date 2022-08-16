@@ -1,3 +1,7 @@
+## FVP Patcher
+[![CD Build](https://github.com/Gates-Of-Time/FVProject-Patcher/actions/workflows/cd.yml/badge.svg)](https://github.com/Gates-Of-Time/FVProject-Patcher/actions/workflows/cd.yml)
+[![CI Build](https://github.com/Gates-Of-Time/FVProject-Patcher/actions/workflows/ci.yml/badge.svg)](https://github.com/Gates-Of-Time/FVProject-Patcher/actions/workflows/ci.yml)
+
 ## Requirements
 Patcher requires [.Net 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) to run.
 
