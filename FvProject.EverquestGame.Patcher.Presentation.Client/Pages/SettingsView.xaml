@@ -57,7 +57,7 @@
                         HorizontalAlignment="Left"   
                         VerticalAlignment="Top"   
                         Width="200"   
-                        Checked="{Binding Path=EnforceMD5Checksum}"/>
+                        IsChecked="{Binding Path=EnforceMD5Checksum}"/>
 
         </Grid>
     </StackPanel>
