@@ -47,6 +47,15 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
             set => SetAndNotify(ref _expansions, value);
         }
 
+        private bool _enforceMD5Checksum;
+        public bool EnforceMD5Checksum {
+            get => _enforceMD5Checksum;
+            set {
+                SetAndNotify(ref _enforceMD5Checksum, value);
+                PersistChanges();
+            }
+        }
+
         public void SelectDirectory() {
             using var dialog = new System.Windows.Forms.FolderBrowserDialog();
             dialog.SelectedPath = _gameDirectory;

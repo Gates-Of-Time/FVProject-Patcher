@@ -46,5 +46,19 @@
                 </Viewbox>
             </Button>
         </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Enforce MD5 checksum" Margin="0" />
+            <CheckBox   Grid.Row="1"  
+                        Margin="2" Padding="4"
+                        HorizontalAlignment="Left"   
+                        VerticalAlignment="Top"   
+                        Width="200"   
+                        IsChecked="{Binding Path=EnforceMD5Checksum}"/>
+
+        </Grid>
     </StackPanel>
 </UserControl>
