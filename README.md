@@ -3,7 +3,7 @@
 [![CI Build](https://github.com/Gates-Of-Time/FVProject-Patcher/actions/workflows/ci.yml/badge.svg)](https://github.com/Gates-Of-Time/FVProject-Patcher/actions/workflows/ci.yml)
 
 ## Requirements
-Patcher requires [.Net 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) to run.
+Patcher requires [.NET Desktop Runtime 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) to run.
 
 `Wine` users can try [this](https://www.winehq.org/pipermail/wine-devel/2020-August/172472.html) approach to install the .Net runtime/sdk.
 
