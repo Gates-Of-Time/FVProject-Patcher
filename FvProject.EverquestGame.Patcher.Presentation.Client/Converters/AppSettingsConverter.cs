@@ -8,7 +8,7 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Converters {
     public class AppSettingsConverter : IConverter<AppSettings, ApplicationConfig> {
         public ApplicationConfig Convert(AppSettings appSettings) {
             var supportedExpansions = appSettings.AvailableExpansions?.Select(Convert).Where(x => x != null) ?? Array.Empty<ExpansionsEnum>();
-            var applicationData = new ApplicationConfig(appSettings.GameDirectory, supportedExpansions) {
+            var applicationData = new ApplicationConfig(appSettings.GameDirectory, supportedExpansions, appSettings.EnforceMD5Checksum) {
                 PreferredExpansion = Convert(appSettings.PreferredExpansion)
             };
             return applicationData;

@@ -12,6 +12,7 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Converters {
                 GameDirectory = applicationData.GameDirectory,
                 PreferredExpansion = Convert(settingsData.selectedExpansion),
                 AvailableExpansions = applicationData.SupportedExpansions.Select(Convert).Where(x => x != null),
+                EnforceMD5Checksum = applicationData.EnforceMD5Checksum,
             };
 
             return appSettings;

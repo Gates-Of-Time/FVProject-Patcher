@@ -5,6 +5,7 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client {
         public string GameDirectory { get; set; }
         public ExpansionEnum? PreferredExpansion { get; set; }
         public IEnumerable<ExpansionEnum?> AvailableExpansions { get; set; }
+        public bool EnforceMD5Checksum { get; set; }
 
         public enum ExpansionEnum {
             Original,
