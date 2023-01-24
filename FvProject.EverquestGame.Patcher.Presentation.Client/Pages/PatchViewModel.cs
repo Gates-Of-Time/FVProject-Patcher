@@ -32,6 +32,8 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
             });
         }
 
+        public bool HasFailed { get; set; }
+
         private double _progressValue = 0;
         public double ProgressValue {
             get => _progressValue;
@@ -51,6 +53,7 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
         }
 
         public async Task PatchClient(ClientPatch clientPatchFileList, CancellationToken cancellationToken) {
+            HasFailed = false;
             ProgressColor = new SolidColorBrush(DefaultProgressColor);
             PatchLog = "";
             ProgressValue = 0;
@@ -62,11 +65,17 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
         }
 
         public void CancelPatching() {
-            ProgressColor = new SolidColorBrush(Colors.DarkRed);
+            FailedPatch();
             ProgressValue = 100;
         }
 
         #region IProgressReporter
+
+        public void FailedPatch() {
+            HasFailed = true;
+            ProgressColor = new SolidColorBrush(Colors.DarkRed);
+        }
+
         public void Report(string message) {
             _stringBuilder.AppendLine(message);
             PatchLog = _stringBuilder.ToString();

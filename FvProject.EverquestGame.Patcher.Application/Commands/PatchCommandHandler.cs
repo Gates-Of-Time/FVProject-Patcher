@@ -34,6 +34,7 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
             var totalDownloadSize = command.PatchList.Downloads.Sum(x => x.size < 1 ? 1 : x.size);
             var curBytes = 0L;
             progressReporter.Report($"Downloading {totalDownloadSize} bytes for {command.PatchList.Downloads.Count()} file(s)...");
+            var failed = false;
             foreach (var downloadFile in command.PatchList.Downloads) {
                 if (cancellationToken.IsCancellationRequested) {
                     return;
@@ -44,10 +45,12 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
                 if (downloadResult.IsFailure) {
                     curBytes += downloadFile.size < 1 ? 1 : downloadFile.size;
                     progressReporter.Report($"Failed to download <{downloadFile.name}> due to {downloadResult.Error}");
+                    failed = true;
                 }
                 else if (command.EnforceMD5Checksum && downloadFile.md5 != MD5Hasher.CreateHash(downloadResult.Value)) {
                     curBytes += downloadFile.size < 1 ? 1 : downloadFile.size;
                     progressReporter.Report($"Incorrect MD5 checksum on downloaded file... {downloadFile.name}");
+                    failed = true;
                 }
                 else {
                     downloadResult.Value.Position = 0;
@@ -76,6 +79,9 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
                     }
                 }
 
+                if (failed) {
+                    progressReporter.FailedPatch();
+                }
                 var progress = curBytes * 100 / totalDownloadSize;
                 progressReporter.Progress.Report(progress);
             }

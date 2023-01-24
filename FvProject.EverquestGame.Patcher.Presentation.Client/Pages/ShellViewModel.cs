@@ -153,8 +153,10 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
             ActiveItem = _patchViewModel;
             await _patchViewModel.PatchClient(CurrentClientPatchFileList, CancellationTokenSource.Token);
 
-            if(CancellationTokenSource?.IsCancellationRequested == false) {
+            if(CancellationTokenSource?.IsCancellationRequested == false && !_patchViewModel.HasFailed) {
                 PublishApplicationStateChangedEvent($"Patched <{_applicationConfig.GameDirectory}> and ready to launch game.", Colors.Green);
+            }else {
+                PublishApplicationStateChangedEvent($"Patching failed, check the patch log for errors.", Colors.Red);
             }
 
             CancellationTokenSource = null;
@@ -193,6 +195,7 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
                 CurrentClient = GameClientsEnum.Unknown;
                 PublishApplicationStateChangedEvent(launchResult.Error, Colors.Red);
                 CanLaunchClient = false;
+                ActiveItem = _settingsViewModel;
             }
             else {
                 CurrentClient = launchResult.Value;

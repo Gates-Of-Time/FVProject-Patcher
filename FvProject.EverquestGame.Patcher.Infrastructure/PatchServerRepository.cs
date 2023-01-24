@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using CSharpFunctionalExtensions;
 using FvProject.EverquestGame.Patcher.Application.Queries;
 using FvProject.EverquestGame.Patcher.Domain;
@@ -50,8 +51,15 @@ namespace FvProject.EverquestGame.Patcher.Infrastructure {
             catch (TaskCanceledException) {
                 return Result.Failure<Stream>($"cancellation.");
             }
+            catch (HttpRequestException ex) {
+                if (ex.InnerException is SocketException) {
+                    return Result.Failure<Stream>($"{ex.InnerException.Message} <{url}>");
+                }
+
+                return Result.Failure<Stream>($"Error: {ex.Message}");
+            }
             catch (Exception ex) {
-                return Result.Failure<Stream>($"Error: {ex}");
+                return Result.Failure<Stream>($"Error: {ex.Message}");
             }
         }
 
