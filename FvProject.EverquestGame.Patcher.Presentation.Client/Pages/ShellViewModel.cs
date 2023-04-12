@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -15,6 +16,8 @@ using Stylet;
 
 namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive, IHandle<ExpansionSelectedEvent>, IHandle<GameDirectoryChangedEvent> {
+        private const string AppName = "Firione Vie Project Patcher";
+
         private readonly IEventAggregator _eventAggregator;
         private readonly IApplicationConfig _applicationConfig;
         private readonly IExternalApplicationService _eqGameApplicationService;
@@ -28,8 +31,6 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
             _applicationConfig = applicationConfig;
             _eqGameApplicationService = new EqGameApplicationService(applicationConfig);
             _httpClient = new HttpClient();
-
-            _title = "Firione Vie Project Patcher";
 
             _eventAggregator?.Subscribe(this);
 
@@ -57,10 +58,10 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
             get => _selectedExpansion;
             set {
                 _selectedExpansion = value;
+                NotifyOfPropertyChange(nameof(Title));
                 if (ActiveItem != _expansionSelectorViewModel) {
                     return;
                 }
-
                 var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
                 Task.Factory.StartNew(async () => {
                     await CheckExpansionPatch(value);
@@ -68,10 +69,19 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
             }
         }
 
-        private string _title;
         public string Title {
-            get => _title;
-            set => SetAndNotify(ref _title, value);
+            get {
+                var title = $"{AppName}";
+                if (CurrentClient != GameClientsEnum.Unknown) {
+                    title = $"{title} - {CurrentClient.DisplayName}";
+                }
+
+                if (SelectedExpansion != ExpansionsEnum.Unknown) {
+                    title = $"{title} - {SelectedExpansion}";
+                }
+
+                return title;
+            }
         }
 
         private GameClientsEnum _currentClient = GameClientsEnum.Unknown;
@@ -153,9 +163,10 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
             ActiveItem = _patchViewModel;
             await _patchViewModel.PatchClient(CurrentClientPatchFileList, CancellationTokenSource.Token);
 
-            if(CancellationTokenSource?.IsCancellationRequested == false && !_patchViewModel.HasFailed) {
+            if (CancellationTokenSource?.IsCancellationRequested == false && !_patchViewModel.HasFailed) {
                 PublishApplicationStateChangedEvent($"Patched <{_applicationConfig.GameDirectory}> and ready to launch game.", Colors.Green);
-            }else {
+            }
+            else {
                 PublishApplicationStateChangedEvent($"Patching failed, check the patch log for errors.", Colors.Red);
             }
 
@@ -189,20 +200,40 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
         }
 
         private void CheckClient() {
-            PublishApplicationStateChangedEvent("Checking for supported client.", Colors.Gold);
-            var launchResult = _eqGameApplicationService.CanExecute;
-            if (launchResult.IsFailure) {
-                CurrentClient = GameClientsEnum.Unknown;
-                PublishApplicationStateChangedEvent(launchResult.Error, Colors.Red);
+            if (CheckDirectX()) {
+                PublishApplicationStateChangedEvent("Checking for supported client.", Colors.Gold);
+                var launchResult = _eqGameApplicationService.CanExecute;
+                if (launchResult.IsFailure) {
+                    CurrentClient = GameClientsEnum.Unknown;
+                    PublishApplicationStateChangedEvent(launchResult.Error, Colors.Red);
+                    CanLaunchClient = false;
+                    ActiveItem = _settingsViewModel;
+                }
+                else {
+                    CurrentClient = launchResult.Value;
+                    NotifyOfPropertyChange(nameof(Title));
+                    PublishApplicationStateChangedEvent("Supported client found.", Colors.Green);
+                    CanLaunchClient = true;
+                }
+            }
+        }
+
+        // https://stackoverflow.com/questions/17130764/check-which-version-of-directx-is-installed
+        // https://stackoverflow.com/questions/15948951/how-to-check-whether-directx-is-available
+        // https://stackoverflow.com/questions/6159850/how-to-code-to-get-direct-x-version-on-my-machine-in-c
+        // https://social.msdn.microsoft.com/Forums/en-US/0f7851a9-23a5-4eda-ab32-a36c17623acf/get-directx-major-and-minor-versions-installed?forum=vbgeneral
+        private static ImmutableArray<string> DirectX90c = ImmutableArray.Create("4.09.00.0904", "4.09.0000.0904");
+        private bool CheckDirectX() {
+            PublishApplicationStateChangedEvent("Checking for supported DirectX.", Colors.Gold);
+            using Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\DirectX");
+            var versionStr = key.GetValue("Version") as string;
+            if (!DirectX90c.Contains(versionStr)) {
+                PublishApplicationStateChangedEvent("DirectX 9.0c is required but not installed.", Colors.Red);
                 CanLaunchClient = false;
-                ActiveItem = _settingsViewModel;
+                return false;
             }
-            else {
-                CurrentClient = launchResult.Value;
-                //Title = $"{_title} - {CurrentClient.DisplayName}";
-                PublishApplicationStateChangedEvent("Supported client found.", Colors.Green);
-                CanLaunchClient = true;
-            }
+
+            return true;
         }
 
         private void LoadPatchFiles() {
