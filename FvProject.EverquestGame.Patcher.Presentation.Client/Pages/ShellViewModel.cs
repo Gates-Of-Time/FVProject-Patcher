@@ -238,7 +238,7 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
 
         private void LoadPatchFiles() {
             if (CurrentClient == GameClientsEnum.Unknown) {
-                PublishAvailableExpansionsEvent(new Dictionary<ExpansionsEnum, PatchManifest> { { ExpansionsEnum.Unknown, null } });
+                PublishApplicationStateChangedEvent("Unknown client.", Colors.Red);
                 return;
             }
 

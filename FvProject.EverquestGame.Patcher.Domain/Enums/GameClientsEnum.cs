@@ -86,7 +86,8 @@ namespace FvProject.EverquestGame.Patcher.Domain.Enums {
             public override bool IsValidFor(string md5hash) {
                 var validHashes = new[] {
                     "240C80800112ADA825C146D7349CE85B",
-                    "A057A23F030BAA1C4910323B131407105ACAD14D" // This is a custom ROF2 from a torrent download
+                    "A057A23F030BAA1C4910323B131407105ACAD14D", // This is a custom ROF2 from a torrent download
+                    "E9D416C6DE6B53008AE00C2B16BBFD6C" // steam client with 4gb patch
                 };
                 return validHashes.Contains(md5hash.ToUpperInvariant());
             }
