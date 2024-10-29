@@ -25,9 +25,6 @@ jobs:
       with:
         dotnet-version: 6.0.x
     
-    - name: Restore dependencies
-      run: dotnet restore
-    
     - name: Build    
       shell: bash
       run: dotnet publish FvProject.EverquestGame.Patcher.Presentation.ConsolePatcher -c Release -r $RuntimeIdentifier -p:AssemblyName=Patcher -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false --self-contained false -o $PublishDir
