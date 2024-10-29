@@ -18,7 +18,7 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
         public async Task Execute(PatchCommand command, CancellationToken cancellationToken = default) {
             var progressReporter = command.ProgressReporter;
 
-            progressReporter.Report($"Patching from {command.PatchList.Downloadprefix}...");
+            progressReporter.Report($"Patching from `{command.PatchList.Downloadprefix}`");
             foreach (var deleteFile in command.PatchList.Deletes) {
                 if (cancellationToken.IsCancellationRequested) {
                     return;
@@ -33,7 +33,7 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
 
             var totalDownloadSize = command.PatchList.Downloads.Sum(x => x.size < 1 ? 1 : x.size);
             var curBytes = 0L;
-            progressReporter.Report($"Downloading {totalDownloadSize} bytes for {command.PatchList.Downloads.Count()} file(s)...");
+            progressReporter.Report($"Downloading {totalDownloadSize} bytes for {command.PatchList.Downloads.Count()} file(s)");
             var failed = false;
             foreach (var downloadFile in command.PatchList.Downloads) {
                 if (cancellationToken.IsCancellationRequested) {
@@ -49,7 +49,7 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
                 }
                 else if (command.EnforceMD5Checksum && downloadFile.md5 != MD5Hasher.CreateHash(downloadResult.Value)) {
                     curBytes += downloadFile.size < 1 ? 1 : downloadFile.size;
-                    progressReporter.Report($"Incorrect MD5 checksum on downloaded file... {downloadFile.name}");
+                    progressReporter.Report($"Incorrect MD5 checksum on downloaded file `{downloadFile.name}`");
                     failed = true;
                 }
                 else {
@@ -70,11 +70,11 @@ namespace FvProject.EverquestGame.Patcher.Application.Commands {
                     if (result.IsSuccess) {
                         curBytes += downloadFile.size - fileBytes;
                         progressReporter.Progress.Report(curBytes * 100 / totalDownloadSize);
-                        progressReporter.Report($"{downloadFile.name}...");
+                        progressReporter.Report($"{downloadFile.name}");
                     }
                     else {
                         curBytes += downloadFile.size < 1 ? 1 : downloadFile.size;
-                        progressReporter.Report($"Failed writing {downloadFile.name}...");
+                        progressReporter.Report($"Failed writing {downloadFile.name}");
                         progressReporter.Report($"\t {result.Error}");
                     }
                 }
