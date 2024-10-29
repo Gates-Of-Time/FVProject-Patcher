@@ -9,7 +9,7 @@ namespace FvProject.EverquestGame.Patcher.Domain {
         public string FullPath { get; }
 
         public bool HasSameName(PatchFileInfo patchFileInfo) {
-            return string.Equals(Name, patchFileInfo.name.Replace("/", @"\"), StringComparison.OrdinalIgnoreCase);
+            return string.Equals(Name, patchFileInfo.name.Replace('/', Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase);
         }
     }
 }

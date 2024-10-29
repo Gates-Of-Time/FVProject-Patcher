@@ -13,8 +13,8 @@ namespace FvProject.EverquestGame.Patcher.Infrastructure {
         private IApplicationConfig ApplicationConfig { get; }
 
         public async Task<Result> Delete(PatchFileInfo fileEntry) {
-            var filePath = fileEntry.name.Replace("/", @"\");
-            filePath = $@"{ApplicationConfig.GameDirectory}\{filePath}";
+            var filePath = fileEntry.name.Replace('/', Path.DirectorySeparatorChar);
+            filePath = Path.Combine(ApplicationConfig.GameDirectory, filePath);
             return await Task.Run(() => {
                 if (File.Exists(filePath)) {
                     try {
@@ -45,9 +45,9 @@ namespace FvProject.EverquestGame.Patcher.Infrastructure {
 
         public async Task<Result> Upsert(PatchFile upsert, CancellationToken cancellationToken = default) {
             try {
-                var filePath = upsert.FileEntry.name.Replace("/", @"\");
+                var filePath = upsert.FileEntry.name.Replace('/', Path.DirectorySeparatorChar);
                 EnsureDirectory(filePath);
-                filePath = $@"{ApplicationConfig.GameDirectory}\{filePath}";
+                filePath = Path.Combine(ApplicationConfig.GameDirectory, filePath);
                 using var fileStream = new FileStream(filePath, FileMode.Create);
                 await upsert.DownloadStream.CopyToAsync(fileStream, 81920, upsert.ProgressReporter, cancellationToken);
             }
@@ -59,8 +59,8 @@ namespace FvProject.EverquestGame.Patcher.Infrastructure {
         }
 
         private void EnsureDirectory(string filePath) {
-            if (filePath.Contains('\\')) { //Make directory if needed.
-                var dir = $@"{ApplicationConfig.GameDirectory}\{filePath.Substring(0, filePath.LastIndexOf(@"\"))}";
+            if (filePath.Contains(Path.DirectorySeparatorChar)) { //Make directory if needed.
+                var dir = Path.Combine(ApplicationConfig.GameDirectory, filePath.Substring(0, filePath.LastIndexOf(Path.DirectorySeparatorChar)));
                 Directory.CreateDirectory(dir);
             }
         }
@@ -68,7 +68,7 @@ namespace FvProject.EverquestGame.Patcher.Infrastructure {
         public async Task<IEnumerable<ClientFileInfo>> GetAll() {
             return await Task.Run(() =>
                 Directory.GetFiles(ApplicationConfig.GameDirectory, "*.*", SearchOption.AllDirectories)
-                         .Select(x => new ClientFileInfo(x.Replace(ApplicationConfig.GameDirectory, "", StringComparison.InvariantCultureIgnoreCase).TrimStart('\\'), x))
+                         .Select(x => new ClientFileInfo(x.Replace(ApplicationConfig.GameDirectory, "", StringComparison.InvariantCultureIgnoreCase).TrimStart(Path.DirectorySeparatorChar), x))
             );
         }
 

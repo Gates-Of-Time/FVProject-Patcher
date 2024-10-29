@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FvProject.EverquestGame.Pat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FvProject.EverquestGame.Patcher.Infrastructure", "FvProject.EverquestGame.Patcher.Infrastructure\FvProject.EverquestGame.Patcher.Infrastructure.csproj", "{E7D3BAF0-4F65-4005-8C03-FA07C9EED238}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FvProject.EverquestGame.Patcher.Presentation.ConsolePatcher", "FvProject.EverquestGame.Patcher.Presentation.ConsolePatcher\FvProject.EverquestGame.Patcher.Presentation.ConsolePatcher.csproj", "{5074D0B9-7217-4AFC-8BE7-BFF12F93A1BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{E7D3BAF0-4F65-4005-8C03-FA07C9EED238}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7D3BAF0-4F65-4005-8C03-FA07C9EED238}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7D3BAF0-4F65-4005-8C03-FA07C9EED238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5074D0B9-7217-4AFC-8BE7-BFF12F93A1BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5074D0B9-7217-4AFC-8BE7-BFF12F93A1BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5074D0B9-7217-4AFC-8BE7-BFF12F93A1BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5074D0B9-7217-4AFC-8BE7-BFF12F93A1BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{8AABB869-AF07-4285-AA05-CD6647788550} = {BC117675-D3A4-467D-9FF3-B2305314F50C}
 		{2988EB98-D6E1-4F50-A822-F9E05B89C3BB} = {C86CD0E2-5504-4F7B-BEA8-F548BBD2F4B5}
 		{E7D3BAF0-4F65-4005-8C03-FA07C9EED238} = {204B8F2C-74F6-457C-BD9F-A508E30A5E34}
+		{5074D0B9-7217-4AFC-8BE7-BFF12F93A1BF} = {C86CD0E2-5504-4F7B-BEA8-F548BBD2F4B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9372E788-B465-483F-B3C3-A7BCD479CCF9}

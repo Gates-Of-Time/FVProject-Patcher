@@ -1,4 +1,4 @@
-name: Continuous Integration - FVProject Pathcer
+name: Continuous Integration - FVProject Patcher Windows
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
