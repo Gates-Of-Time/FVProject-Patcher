@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -30,7 +32,25 @@ namespace FvProject.EverquestGame.Patcher.Presentation.Client.Pages {
             _eventAggregator = eventAggregator;
             _applicationConfig = applicationConfig;
             _eqGameApplicationService = new EqGameApplicationService(applicationConfig);
-            _httpClient = new HttpClient();
+            var handler = new HttpClientHandler {
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => {
+                    // Allow expired certificates (ignore errors)
+                    if (errors == SslPolicyErrors.None)
+                        return true;
+
+                    // Here you can specifically allow "certificate expired" while blocking others
+                    if (errors.HasFlag(SslPolicyErrors.RemoteCertificateChainErrors) ||
+                        errors.HasFlag(SslPolicyErrors.RemoteCertificateNameMismatch) ||
+                        errors.HasFlag(SslPolicyErrors.RemoteCertificateNotAvailable)) {
+                        // Decide if you want to block these
+                        //return false;
+                    }
+
+                    Console.WriteLine($"Ignoring certificate errors: {errors}");
+                    return true;
+                }
+            };
+            _httpClient = new HttpClient(handler);
 
             _eventAggregator?.Subscribe(this);
 

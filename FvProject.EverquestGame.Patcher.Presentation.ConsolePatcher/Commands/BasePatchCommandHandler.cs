@@ -1,4 +1,5 @@
 using System.CommandLine.Invocation;
+using System.Net.Security;
 using CSharpFunctionalExtensions;
 using FvProject.EverquestGame.Patcher.Application.Commands;
 using FvProject.EverquestGame.Patcher.Application.Queries;
@@ -15,7 +16,27 @@ namespace FvProject.EverquestGame.Patcher.Presentation.ConsolePatcher.Commands {
         public bool MD5 { get; set; } // Conventional binding
 
         public BasePatchCommandHandler(ExpansionsEnum expansion) {
-            HttpClient = new HttpClient();
+            var handler = new HttpClientHandler {
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+                {
+                    // Allow expired certificates (ignore errors)
+                    if (errors == SslPolicyErrors.None)
+                        return true;
+
+                    // Here you can specifically allow "certificate expired" while blocking others
+                    if (errors.HasFlag(SslPolicyErrors.RemoteCertificateChainErrors) ||
+                        errors.HasFlag(SslPolicyErrors.RemoteCertificateNameMismatch) ||
+                        errors.HasFlag(SslPolicyErrors.RemoteCertificateNotAvailable)) {
+                        // Decide if you want to block these
+                        //return false;
+                    }
+
+                    Console.WriteLine($"Ignoring certificate errors: {errors}");
+                    return true;
+                }
+            };
+
+            HttpClient = new HttpClient(handler);
             Expansion = expansion;
         }
 
