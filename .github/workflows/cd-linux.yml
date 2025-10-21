@@ -27,7 +27,7 @@ jobs:
     
     - name: Build    
       shell: bash
-      run: dotnet publish FvProject.EverquestGame.Patcher.Presentation.ConsolePatcher -c Release -r $RuntimeIdentifier -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false --self-contained false -o $PublishDir
+      run: dotnet publish FvProject.EverquestGame.Patcher.Presentation.ConsolePatcher -c Release -r $RuntimeIdentifier -p:PublishSingleFile=true -p:DebugType=None -p:DebugSymbols=false --self-contained true -o $PublishDir
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
